@@ -1,0 +1,49 @@
+version: '3.5'
+
+services:
+  app:
+    image: toras9000/excalidraw-mp:v0.14.2
+    build:
+      context: ./build/app
+      args:
+        - EXCALIDRAW_REV=v0.14.2
+      x-bake:
+        tags:
+          - toras9000/excalidraw-mp:v0.14.2
+          - toras9000/excalidraw-mp:latest
+          - ghcr.io/toras9000/docker-excalidraw:v0.14.2
+          - ghcr.io/toras9000/docker-excalidraw:latest
+        platforms:
+          - linux/amd64
+          - linux/arm64
+          - linux/arm/v7
+        pull: true
+    restart: unless-stopped
+    ports:
+      - "8001:80"
+    environment:
+      - TZ=Asia/Tokyo
+      - REACT_APP_WS_SERVER_URL=http://localhost:8002/
+
+  collabo:
+    image: toras9000/excalidraw-room-mp:v2022.01.11
+    build:
+      context: ./build/room
+      args:
+        - EXCALIDRAW_ROOM_REV=c0bf0ba76c270920427554e8a61511da666bcd5a
+      x-bake:
+        tags:
+          - toras9000/excalidraw-room-mp:v2022.01.11
+          - toras9000/excalidraw-room-mp:latest
+          - ghcr.io/toras9000/docker-excalidraw-room:v2022.01.11
+          - ghcr.io/toras9000/docker-excalidraw-room:latest
+        platforms:
+          - linux/amd64
+          - linux/arm64
+          - linux/arm/v7
+        pull: true
+    restart: unless-stopped
+    ports:
+      - "8002:80"
+    environment:
+      - TZ=Asia/Tokyo
