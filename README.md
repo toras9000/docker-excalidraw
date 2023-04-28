@@ -17,7 +17,7 @@ version: '3.5'
 
 services:
   app:
-    image: toras9000/excalidraw-mp:v0.14.2
+    image: toras9000/excalidraw-mp:v0.15.0
     restart: unless-stopped
     ports:
       - "8001:80"
