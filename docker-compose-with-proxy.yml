@@ -1,0 +1,67 @@
+services:
+  app:
+    image: toras9000/excalidraw-mp:v0.17.3
+    restart: unless-stopped
+    networks:
+      default:
+      frontend:
+        aliases:
+          - excalidraw-app-container
+    environment:
+      - TZ=Asia/Tokyo
+      - VITE_APP_WS_SERVER_URL=https://excalidraw-room.myserver.home/
+
+  collabo:
+    image: toras9000/excalidraw-room-mp:v2023.12.15
+    restart: unless-stopped
+    networks:
+      default:
+      frontend:
+        aliases:
+          - excalidraw-room-container
+    environment:
+      - TZ=Asia/Tokyo
+
+  proxy:
+    image: nginx:1.25
+    restart: unless-stopped
+    command: >
+      sh -c
+      "
+      chmod 444 /assets/certs/ca/*
+      && rm /etc/nginx/conf.d/*
+      && envsubst '
+      $$CONF_UPSTREAM_APP
+      $$CONF_UPSTREAM_ROOM
+      $$CONF_SERVER_NAME_APP
+      $$CONF_SERVER_NAME_ROOM
+      $$CONF_SERVER_CERT
+      $$CONF_SERVER_KEY
+      $$CONF_CERTS_DIR
+      '
+      < /assets/configs/server/default.conf.template
+      > /etc/nginx/conf.d/default.conf
+      && exec nginx -g 'daemon off;'
+      "
+    depends_on:
+      - app
+    networks:
+      frontend:
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./assets/certs/ca:/assets/certs/ca
+      - ./assets/certs/server:/assets/certs/server:ro
+      - ./assets/configs:/assets/configs:ro
+    environment:
+      - CONF_UPSTREAM_APP=excalidraw-app-container
+      - CONF_UPSTREAM_ROOM=excalidraw-room-container
+      - CONF_SERVER_NAME_APP=excalidraw.myserver.home
+      - CONF_SERVER_NAME_ROOM=excalidraw-room.myserver.home
+      - CONF_SERVER_CERT=/assets/certs/server/server.crt
+      - CONF_SERVER_KEY=/assets/certs/server/server.key
+      - CONF_CERTS_DIR=/assets/certs/ca/
+
+networks:
+  frontend:

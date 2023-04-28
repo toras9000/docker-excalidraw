@@ -10,31 +10,11 @@ Multi-architecture image built with buildx.
 
 ## Example
 
-A simple local try docker compose file.
-
-```yaml
-version: '3.5'
-
-services:
-  app:
-    image: toras9000/excalidraw-mp:v0.17.3
-    restart: unless-stopped
-    ports:
-      - "8001:80"
-    environment:
-      - REACT_APP_WS_SERVER_URL=http://localhost:8002/
-
-  collabo:
-    image: toras9000/excalidraw-room-mp:v2023.12.15
-    restart: unless-stopped
-    ports:
-      - "8002:80"
-```
-
-Run and access http://localhost:8001/  
+A sample using a self-signed Certificate Authority server certificate and a reverse proxy is described in docker-compose-with-proxy.yml.  
+If proper name resolution has been performed, you can access https://excalidraw.myserver.home/ after running.  
 
 ```bash
-$ docker-compose up
+$ docker-compose --file ./docker-compose-with-proxy.yml up
 ```
 
 ## Enviroment variables
