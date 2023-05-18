@@ -26,16 +26,16 @@ services:
       - REACT_APP_WS_SERVER_URL=http://localhost:8002/
 
   collabo:
-    image: toras9000/excalidraw-room-mp:v2022.01.11
+    image: toras9000/excalidraw-room-mp:v2023.05.16
     build:
       context: ./build/room
       args:
-        - EXCALIDRAW_ROOM_REV=c0bf0ba76c270920427554e8a61511da666bcd5a
+        - EXCALIDRAW_ROOM_REV=b6547a66d79898e51174096bcbb2c37b829917bd
       x-bake:
         tags:
-          - toras9000/excalidraw-room-mp:v2022.01.11
+          - toras9000/excalidraw-room-mp:v2023.05.16
           - toras9000/excalidraw-room-mp:latest
-          - ghcr.io/toras9000/docker-excalidraw-room:v2022.01.11
+          - ghcr.io/toras9000/docker-excalidraw-room:v2023.05.16
           - ghcr.io/toras9000/docker-excalidraw-room:latest
         platforms:
           - linux/amd64
