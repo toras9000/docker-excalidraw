@@ -2,16 +2,16 @@ version: '3.5'
 
 services:
   app:
-    image: toras9000/excalidraw-mp:v0.15.0
+    image: toras9000/excalidraw-mp:v0.16.1
     build:
       context: ./build/app
       args:
-        - EXCALIDRAW_REV=v0.15.0
+        - EXCALIDRAW_REV=v0.16.1
       x-bake:
         tags:
-          - toras9000/excalidraw-mp:v0.15.0
+          - toras9000/excalidraw-mp:v0.16.1
           - toras9000/excalidraw-mp:latest
-          - ghcr.io/toras9000/docker-excalidraw:v0.15.0
+          - ghcr.io/toras9000/docker-excalidraw:v0.16.1
           - ghcr.io/toras9000/docker-excalidraw:latest
         platforms:
           - linux/amd64
@@ -23,7 +23,7 @@ services:
       - "8001:80"
     environment:
       - TZ=Asia/Tokyo
-      - REACT_APP_WS_SERVER_URL=http://localhost:8002/
+      - VITE_APP_WS_SERVER_URL=http://localhost:8002/
 
   collabo:
     image: toras9000/excalidraw-room-mp:v2023.05.27

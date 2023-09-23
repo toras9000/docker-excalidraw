@@ -1,6 +1,7 @@
-FROM node:16-alpine as builder
+FROM node:18 as builder
 
-RUN apk --no-cache add git
+RUN apt-get update
+RUN apt-get install -y --no-install-recommends git
 
 WORKDIR /work/repo
 ARG EXCALIDRAW_REV=master
@@ -18,15 +19,22 @@ ARG NODE_ENV=production
 RUN cp    /work/repo/.env.production   .
 RUN cp    /work/repo/.eslintrc.json    .
 RUN cp    /work/repo/.npmrc            .
-RUN cp    /work/repo/tsconfig.json     .
+RUN cp    /work/repo/.nvmrc            .
+RUN cp    /work/repo/.lintstagedrc.js  .
+RUN cp    /work/repo/.watchmanconfig   .
+RUN cp    /work/repo/*.json            .
+RUN cp    /work/repo/*.ts              .
+RUN cp    /work/repo/*.html            .
 RUN cp -R /work/repo/public/           .
 RUN cp -R /work/repo/src/              .
+RUN cp -R /work/repo/scripts/          .
+RUN cp -R /work/repo/excalidraw-app/   .
 
 RUN sed -i -E 's|^(\s*"excalidraw\.production\.min"\s*:\s*)"\./entry\.js"|\1"../src/excalidraw-app/index.js"|'            ./src/packages/excalidraw/webpack.prod.config.js
-RUN sed -i -E 's|^\s*REACT_APP_WS_SERVER_URL\s*=.*$|REACT_APP_WS_SERVER_URL=https://dummy-collaboration-server.example|'  ./.env.production
+RUN sed -i -E 's|^\s*VITE_APP_WS_SERVER_URL\s*=.*$|VITE_APP_WS_SERVER_URL=https://dummy-collaboration-server.example|'    ./.env.production
 RUN yarn build:app:docker
 
-FROM nginx:1.23-alpine
+FROM nginx:1.25-alpine
 
 COPY --from=builder /work/app/build  /usr/share/nginx/html
 
