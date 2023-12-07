@@ -40,6 +40,6 @@ $ docker-compose up
 ## Enviroment variables
 
 - toras9000/excalidraw-mp
-    - `REACT_APP_WS_SERVER_URL`  
+    - `VITE_APP_WS_SERVER_URL`  
       Collaboration server URL.  
       This must always be specified, as the default is an invalid dummy URL.
