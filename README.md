@@ -20,7 +20,7 @@ services:
     image: toras9000/excalidraw-mp:v0.17.0
     restart: unless-stopped
     ports:
-      - "8001:80"
+      - "8001:8080"
     environment:
       - REACT_APP_WS_SERVER_URL=http://localhost:8002/
 
