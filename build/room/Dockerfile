@@ -25,6 +25,7 @@ WORKDIR /app
 
 COPY --from=builder /work/app  .
 
-EXPOSE 80
+ENV PORT=8080
+EXPOSE 8080
 
 CMD ["yarn", "start"]
