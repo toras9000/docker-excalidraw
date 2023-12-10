@@ -28,7 +28,7 @@ services:
     image: toras9000/excalidraw-room-mp:v2023.05.27
     restart: unless-stopped
     ports:
-      - "8002:80"
+      - "8002:8080"
 ```
 
 Run and access http://localhost:8001/  
