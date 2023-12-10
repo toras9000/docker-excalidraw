@@ -34,12 +34,12 @@ RUN sed -i -E 's|^(\s*"excalidraw\.production\.min"\s*:\s*)"\./entry\.js"|\1"../
 RUN sed -i -E 's|^\s*VITE_APP_WS_SERVER_URL\s*=.*$|VITE_APP_WS_SERVER_URL=https://dummy-collaboration-server.example|'    ./.env.production
 RUN yarn build:app:docker
 
-FROM nginx:1.25-alpine
+FROM nginxinc/nginx-unprivileged:1.25
 
 COPY --from=builder /work/app/build  /usr/share/nginx/html
 
 COPY ./assets   /work
 
-HEALTHCHECK CMD wget -q -O /dev/null http://localhost || exit 1
+HEALTHCHECK CMD wget -q -O /dev/null http://localhost:8080 || exit 1
 
 CMD ["sh", "/work/startup/run.sh"]
