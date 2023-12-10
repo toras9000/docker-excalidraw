@@ -20,7 +20,7 @@ services:
         pull: true
     restart: unless-stopped
     ports:
-      - "8001:80"
+      - "8001:8080"
     environment:
       - TZ=Asia/Tokyo
       - VITE_APP_WS_SERVER_URL=http://localhost:8002/
