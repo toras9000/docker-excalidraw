@@ -26,16 +26,16 @@ services:
       - VITE_APP_WS_SERVER_URL=http://localhost:8002/
 
   collabo:
-    image: toras9000/excalidraw-room-mp:v2023.05.27
+    image: toras9000/excalidraw-room-mp:v2023.12.15
     build:
       context: ./build/room
       args:
-        - EXCALIDRAW_ROOM_REV=49bf529ea1f9448f1a6f77ae051092585162e132
+        - EXCALIDRAW_ROOM_REV=03ff435860b508d7cd9e005cfc90f7977ae2a593
       x-bake:
         tags:
-          - toras9000/excalidraw-room-mp:v2023.05.27
+          - toras9000/excalidraw-room-mp:v2023.12.15
           - toras9000/excalidraw-room-mp:latest
-          - ghcr.io/toras9000/docker-excalidraw-room:v2023.05.27
+          - ghcr.io/toras9000/docker-excalidraw-room:v2023.12.15
           - ghcr.io/toras9000/docker-excalidraw-room:latest
         platforms:
           - linux/amd64
