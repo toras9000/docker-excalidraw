@@ -17,7 +17,7 @@ version: '3.5'
 
 services:
   app:
-    image: toras9000/excalidraw-mp:v0.17.0
+    image: toras9000/excalidraw-mp:v0.17.3
     restart: unless-stopped
     ports:
       - "8001:80"
@@ -25,7 +25,7 @@ services:
       - REACT_APP_WS_SERVER_URL=http://localhost:8002/
 
   collabo:
-    image: toras9000/excalidraw-room-mp:v2023.05.27
+    image: toras9000/excalidraw-room-mp:v2023.12.15
     restart: unless-stopped
     ports:
       - "8002:80"

@@ -1,17 +1,15 @@
-version: '3.5'
-
 services:
   app:
-    image: toras9000/excalidraw-mp:v0.17.0
+    image: toras9000/excalidraw-mp:v0.17.3
     build:
       context: ./build/app
       args:
-        - EXCALIDRAW_REV=v0.17.0
+        - EXCALIDRAW_REV=v0.17.3
       x-bake:
         tags:
-          - toras9000/excalidraw-mp:v0.17.0
+          - toras9000/excalidraw-mp:v0.17.3
           - toras9000/excalidraw-mp:latest
-          - ghcr.io/toras9000/docker-excalidraw:v0.17.0
+          - ghcr.io/toras9000/docker-excalidraw:v0.17.3
           - ghcr.io/toras9000/docker-excalidraw:latest
         platforms:
           - linux/amd64
